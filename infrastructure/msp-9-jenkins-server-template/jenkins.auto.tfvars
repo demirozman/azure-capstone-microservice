@@ -1,0 +1,8 @@
+mykey-a = "kingcobra"
+ami-a = "ami-0230bd60aa48260c6"
+region = "us-east-1"
+instance_type_a = "t3a.medium"
+jenkins_server_secgr_a = "petclinic-jenkins-secgr-a"
+jenkins-server-tag-a = "Jenkins Server of Petclinic"
+jenkins-profile-a = "petclinic-jenkins-srv-profile"
+jenkins-role-a = "petclinic-jenkins-srv-role"
