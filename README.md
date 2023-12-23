@@ -1,9 +1,9 @@
-# Project 505: Microservices CI/CD Pipeline
+# Project 505 AZURE: Microservices CI/CD Pipeline
 
 ## Description
 
-This project aims to create full CI/CD Pipeline for microservice based applications using [Spring Petclinic Microservices Application](https://github.com/spring-petclinic/spring-petclinic-microservices). Jenkins Server deployed on Elastic Compute Cloud (EC2) Instance is used as CI/CD Server to build pipelines.
-
+This project aims to create full CI/CD Pipeline for microservice based applications using [Spring Petclinic Microservices Application](https://github.com/spring-petclinic/spring-petclinic-microservices). Jenkins Server deployed on Elastic Compute Cloud (EC2) Instance is used as CI/CD Server to build pipelines. 
+In this project Ubuntu 22.04 LTS is prefered. 
 ## DevOps Pipelines
 
 ### Development Diagram
