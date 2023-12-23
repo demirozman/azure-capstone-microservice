@@ -63,20 +63,29 @@ This project aims to create full CI/CD Pipeline for microservice based applicati
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 * Prepare development server manually on Amazon Linux 2023 (t3a.medium) for developers, enabled with `Docker`,  `Docker-Compose`,  `Java 11`,  `Git`.
-
+# git is already installed on azure/ubuntu 22.04 lts
 ``` bash
 #! /bin/bash
-sudo dnf update -y
+sudo apt-get update -y
+sudo apt-get upgrade -y
 sudo hostnamectl set-hostname petclinic-dev-server
-sudo dnf install docker -y
+sudo apt-get install apt-transport-https ca-certificates curl gnupg lsb-release -y
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg -y
+# Add the repository to Apt sources:
+sudo echo "deb [arch=$(dpkg --print-architecture) \
+     signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+     $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+     sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 sudo systemctl start docker
 sudo systemctl enable docker
-sudo usermod -a -G docker ec2-user
+sudo usermod -a -G docker azureuser
 sudo curl -SL https://github.com/docker/compose/releases/download/v2.20.3/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
-sudo dnf install git -y
-sudo dnf install java-11-amazon-corretto -y
 newgrp docker
+sudo apt-get install openjdk-11-jdk -y
 ```
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
