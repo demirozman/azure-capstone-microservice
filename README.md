@@ -868,13 +868,20 @@ git push origin dev
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 * Create `feature/msp-13` branch from `dev`.
-
+ 
 ``` bash
 git checkout dev
 git branch feature/msp-13
 git checkout feature/msp-13
 ```
-
+```
+    post {
+        script {
+          success {
+            slackSend channel: '#class', color: 'slackSend color: "#439FE0", message: "Build Started: ${env.JOB_NAME} ${env.BUILD_NUMBER}"', message: 'Hi Master! Your job process successfully complated. DemirMann hat geschaft. ', teamDomain: 'itcoderscamp', tokenCredentialId: 'demirMannOnSlack' }
+        }
+    }
+```
 * Create a folder for Selenium jobs with the name of `selenium-jobs` under under `petclinic-microservices-with-db` folder.
 
 ``` bash
