@@ -881,6 +881,31 @@ git push origin dev
             slackSend channel: '#class', color: 'slackSend color: "#439FE0", message: "Build Started: ${env.JOB_NAME} ${env.BUILD_NUMBER}"', message: 'Hi Master! Your job process successfully complated. DemirMann hat geschaft. ', teamDomain: 'itcoderscamp', tokenCredentialId: 'demirMannOnSlack' }
         }
     }
+sudo apt-get install unzip
+    LATEST_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE) && wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/$LATEST_VERSION/chromedriver_linux64.zip && sudo unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/;
+
+
+ 274  docker image ls > null.txt
+  275  cat null.txt
+  276  awk '{print $3}' null.txt > null.txt
+  277  cat nu
+  278  awk '{print $3}' null.txt > 
+  279  docker image ls > null.txt
+  280  awk '{print $3}' null.txt
+  281  awk '{print}' ORS='" ' null.txt
+  282  awk '{print $3}' null.txt
+  283  awk '{print $3}' null.txt | tee null.txt
+  284  cat null.txt
+  285  awk '{print}' ORS=' '
+  286  awk '{print}' ORS=' ' null.txt
+  287  awk '{NR print}' ORS=' ' null.txt
+  288  awk '{NR print}' historyORS=' ' null.txt
+  289  history
+  290  awk '{if (NR>=37371) print}'
+  291  awk '{if (NR<-1) print $3}' null.txt
+  292  docker image ls > null.txt
+  293  awk '{print $3}' null.txt
+  294  awk '{(NR>=1) print $3}' null.txt
 ```
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 ## MSP 13 - Prepare and Implement Selenium Tests
