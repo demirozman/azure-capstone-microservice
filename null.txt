@@ -1,0 +1,13 @@
+REPOSITORY                    TAG       IMAGE ID       CREATED        SIZE
+petclinic-visits-service      dev       7d39cdb91189   6 hours ago    384MB
+petclinic-vets-service        dev       e307ed194707   6 hours ago    386MB
+petclinic-hystrix-dashboard   dev       bdcf41c48cf9   6 hours ago    355MB
+petclinic-discovery-server    dev       69bc99cd5b0c   6 hours ago    368MB
+petclinic-customers-service   dev       502599bcaa24   6 hours ago    384MB
+petclinic-config-server       dev       a38675b1b87b   6 hours ago    351MB
+petclinic-api-gateway         dev       6bc19a08d6a8   6 hours ago    373MB
+petclinic-admin-server        dev       8b5d9dde7a3e   6 hours ago    368MB
+petclinic-prometheus-server   dev       af961c4d178f   9 hours ago    110MB
+petclinic-grafana-server      dev       4df1611da59b   9 hours ago    399MB
+openzipkin/zipkin             latest    4dc8c95c0a09   19 hours ago   181MB
+mysql                         5.7.8     adedf30d6136   8 years ago    358MB
