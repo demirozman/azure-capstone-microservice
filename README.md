@@ -871,7 +871,17 @@ git checkout dev
 git merge feature/msp-12
 git push origin dev
 ```
-
+```
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+## MSP 12/13 - Slack Notification Integration
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    post {
+        script {
+          success {
+            slackSend channel: '#class', color: 'slackSend color: "#439FE0", message: "Build Started: ${env.JOB_NAME} ${env.BUILD_NUMBER}"', message: 'Hi Master! Your job process successfully complated. DemirMann hat geschaft. ', teamDomain: 'itcoderscamp', tokenCredentialId: 'demirMannOnSlack' }
+        }
+    }
+```
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 ## MSP 13 - Prepare and Implement Selenium Tests
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -883,15 +893,7 @@ git checkout dev
 git branch feature/msp-13
 git checkout feature/msp-13
 ```
-```
-    post {
-        script {
-          success {
-            slackSend channel: '#class', color: 'slackSend color: "#439FE0", message: "Build Started: ${env.JOB_NAME} ${env.BUILD_NUMBER}"', message: 'Hi Master! Your job process successfully complated. DemirMann hat geschaft. ', teamDomain: 'itcoderscamp', tokenCredentialId: 'demirMannOnSlack' }
-        }
-    }
-```
-* Create a folder for Selenium jobs with the name of `selenium-jobs` under under `petclinic-microservices-with-db` folder.
+* Create a folder for Selenium jobs with the name of `selenium-jobs` under `petclinic-microservices-with-db` folder.
 
 ``` bash
 mkdir selenium-jobs
@@ -969,17 +971,17 @@ all_link.click()
 sleep(2)
 # Register new Owner to Petclinic App
 fn_field = driver.find_element_by_name('firstName')
-fn = 'Callahan' + str(random.randint(0, 100))
+fn = 'EisenMann' + str(random.randint(0, 100))
 fn_field.send_keys(fn)
 sleep(1)
 fn_field = driver.find_element_by_name('lastName')
-fn_field.send_keys('Clarusway')
+fn_field.send_keys('DemirMann')
 sleep(1)
 fn_field = driver.find_element_by_name('address')
-fn_field.send_keys('Ridge Corp. Street')
+fn_field.send_keys('RichMann Corp. Street')
 sleep(1)
 fn_field = driver.find_element_by_name('city')
-fn_field.send_keys('McLean')
+fn_field.send_keys('McDemir')
 sleep(1)
 fn_field = driver.find_element_by_name('telephone')
 fn_field.send_keys('+1230576803')
