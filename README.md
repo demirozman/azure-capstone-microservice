@@ -1434,10 +1434,11 @@ chmod 400 ${ANS_KEYPAIR}
 
 ```bash
 PATH="$PATH:/usr/local/bin"
-ANS_KEYPAIR="petclinic-ansible-test-dev.key"
+ANS_KEYPAIR="dmr-petclinic-ansible-test-dev.key"
 AWS_REGION="us-east-1"
 cd infrastructure/dev-k8s-terraform
 sed -i "s/null/$ANS_KEYPAIR/g" main.tf
+cat main.tf
 terraform init
 terraform apply -auto-approve -no-color
 ```
