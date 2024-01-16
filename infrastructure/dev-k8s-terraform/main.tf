@@ -2,24 +2,24 @@ provider "aws" {
   region  = "us-east-1"
 }
 
-variable "sec-gr-mutual" {
-  default = "petclinic-k8s-mutual-sec-group"
+variable "dmr-sec-gr-mutual" {
+  default = "dmr-petclinic-k8s-mutual-sec-group"
 }
 
-variable "sec-gr-k8s-master" {
-  default = "petclinic-k8s-master-sec-group"
+variable "dmr-sec-gr-k8s-master" {
+  default = "dmr-petclinic-k8s-master-sec-group"
 }
 
-variable "sec-gr-k8s-worker" {
-  default = "petclinic-k8s-worker-sec-group"
+variable "dmr-sec-gr-k8s-worker" {
+  default = "dmr-petclinic-k8s-worker-sec-group"
 }
 
 data "aws_vpc" "name" {
   default = true
 }
 
-resource "aws_security_group" "petclinic-mutual-sg" {
-  name = var.sec-gr-mutual
+resource "aws_security_group" "dmr-petclinic-mutual-sg" {
+  name = var.dmr-sec-gr-mutual
   vpc_id = data.aws_vpc.name.id
 
   ingress {
@@ -45,8 +45,8 @@ resource "aws_security_group" "petclinic-mutual-sg" {
 
 }
 
-resource "aws_security_group" "petclinic-kube-worker-sg" {
-  name = var.sec-gr-k8s-worker
+resource "aws_security_group" "dmr-petclinic-kube-worker-sg" {
+  name = var.dmr-sec-gr-k8s-worker
   vpc_id = data.aws_vpc.name.id
 
 
@@ -71,12 +71,12 @@ resource "aws_security_group" "petclinic-kube-worker-sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
-    Name = "kube-worker-secgroup"
+    Name = "dmr-kube-worker-secgroup"
   }
 }
 
-resource "aws_security_group" "petclinic-kube-master-sg" {
-  name = var.sec-gr-k8s-master
+resource "aws_security_group" "dmr-petclinic-kube-master-sg" {
+  name = var.dmr-sec-gr-k8s-master
   vpc_id = data.aws_vpc.name.id
 
   ingress {
@@ -122,12 +122,12 @@ resource "aws_security_group" "petclinic-kube-master-sg" {
   }
   
   tags = {
-    Name = "kube-master-secgroup"
+    Name = "dmr-kube-master-secgroup"
   }
 }
 
-resource "aws_iam_role" "petclinic-master-server-s3-role" {
-  name               = "petclinic-master-server-role"
+resource "aws_iam_role" "dmr-petclinic-master-server-s3-role" {
+  name               = "dmr-petclinic-master-server-role"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -147,16 +147,16 @@ EOF
   managed_policy_arns = ["arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"]
 }
 
-resource "aws_iam_instance_profile" "petclinic-master-server-profile" {
-  name = "petclinic-master-server-profile"
-  role = aws_iam_role.petclinic-master-server-s3-role.name
+resource "aws_iam_instance_profile" "dmr-petclinic-master-server-profile" {
+  name = "dmr-petclinic-master-server-profile"
+  role = aws_iam_role.dmr-petclinic-master-server-s3-role.name
 }
 
 resource "aws_instance" "kube-master" {
     ami = "ami-053b0d53c279acc90"
     instance_type = "t3a.medium"
-    iam_instance_profile = aws_iam_instance_profile.petclinic-master-server-profile.name
-    vpc_security_group_ids = [aws_security_group.petclinic-kube-master-sg.id, aws_security_group.petclinic-mutual-sg.id]
+    iam_instance_profile = aws_iam_instance_profile.dmr-petclinic-master-server-profile.name
+    vpc_security_group_ids = [aws_security_group.dmr-petclinic-kube-master-sg.id, aws_security_group.dmr-petclinic-mutual-sg.id]
     key_name = "null"
     subnet_id = "subnet-027b102c209b9b85c"  # select own subnet_id of us-east-1a
     availability_zone = "us-east-1a"
@@ -172,7 +172,7 @@ resource "aws_instance" "kube-master" {
 resource "aws_instance" "worker-1" {
     ami = "ami-053b0d53c279acc90"
     instance_type = "t3a.medium"
-    vpc_security_group_ids = [aws_security_group.petclinic-kube-worker-sg.id, aws_security_group.petclinic-mutual-sg.id]
+    vpc_security_group_ids = [aws_security_group.dmr-petclinic-kube-worker-sg.id, aws_security_group.dmr-petclinic-mutual-sg.id]
     key_name = "null"
     subnet_id = "subnet-027b102c209b9b85c"  # select own subnet_id of us-east-1a
     availability_zone = "us-east-1a"
@@ -188,7 +188,7 @@ resource "aws_instance" "worker-1" {
 resource "aws_instance" "worker-2" {
     ami = "ami-053b0d53c279acc90"
     instance_type = "t3a.medium"
-    vpc_security_group_ids = [aws_security_group.petclinic-kube-worker-sg.id, aws_security_group.petclinic-mutual-sg.id]
+    vpc_security_group_ids = [aws_security_group.dmr-petclinic-kube-worker-sg.id, aws_security_group.dmr-petclinic-mutual-sg.id]
     key_name = "null"
     subnet_id = "subnet-027b102c209b9b85c"  # select own subnet_id of us-east-1a
     availability_zone = "us-east-1a"
