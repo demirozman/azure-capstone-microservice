@@ -1446,11 +1446,27 @@ terraform apply -auto-approve -no-color
 
   * Click `Build Now`
 
+  ###########################################
+PATH="$PATH:/usr/local/bin"
+ANS_KEYPAIR="petclinic-ansible-test-dev.key"
+AWS_REGION="us-east-1"
+# aws ec2 delete-key-pair --region ${AWS_REGION} --key-name ${ANS_KEYPAIR}
+# rm -rf ${ANS_KEYPAIR}
+aws ec2 describe-key-pairs --region ${AWS_REGION} --key-name ${ANS_KEYPAIR} || \
+aws ec2 create-key-pair --region ${AWS_REGION} --key-name ${ANS_KEYPAIR} --query "KeyMaterial" --output text > ${ANS_KEYPAIR}
+chmod 400 ${ANS_KEYPAIR}
+cd infrastructure/dev-k8s-terraform
+sed -i "s/null/$ANS_KEYPAIR/g" main.tf
+cat main.tf
+terraform init
+terraform apply -auto-approve -no-color
+####################################################
+
 - After running the job above, replace the script with the one below in order to test SSH connection with one of the instances.(Click `Configure`)
 
 ```bash
 ANS_KEYPAIR="petclinic-ansible-test-dev.key"
-ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ${WORKSPACE}/${ANS_KEYPAIR} ubuntu@172.31.91.243 hostname
+ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ${WORKSPACE}/${ANS_KEYPAIR} ubuntu@172.31.17.23 hostname
 ```
   * Click `Save`
 
