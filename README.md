@@ -1784,7 +1784,7 @@ git push origin dev
 ``` bash
 git checkout dev
 git branch feature/msp-17
-git checkout feature/msp-17
+git checkout -b feature/msp-17
 ```
 
 * Create a folder with name of `k8s` under `petclinic-microservices-with-db` folder for keeping the manifest files of Petclinic App on Kubernetes cluster.
@@ -1963,8 +1963,8 @@ DNS_NAME: "DNS Name of your application"
 * Create an ``S3 bucket`` for Helm charts. In the bucket, create a ``folder`` called ``stable/myapp``. The example in this pattern uses s3://petclinic-helm-charts-<put-your-name>/stable/myapp as the target chart repository.
 
 ```bash
-aws s3api create-bucket --bucket petclinic-helm-charts-<put-your-name> --region us-east-1
-aws s3api put-object --bucket petclinic-helm-charts-<put-your-name> --key stable/myapp/
+aws s3api create-bucket --bucket petclinic-helm-charts-perfectotr --region us-east-1
+aws s3api put-object --bucket petclinic-helm-charts-perfectotr --key stable/myapp/
 ```
 
 * Install the helm-s3 plugin for Amazon S3.
@@ -1986,7 +1986,7 @@ exit
 * ``Initialize`` the Amazon S3 Helm repository.
 
 ```bash
-AWS_REGION=us-east-1 helm s3 init s3://petclinic-helm-charts-<put-your-name>/stable/myapp 
+AWS_REGION=us-east-1 helm s3 init s3://petclinic-helm-charts-perfectotr/stable/myapp 
 ```
 
 * The command creates an ``index.yaml`` file in the target to track all the chart information that is stored at that location.
@@ -1994,14 +1994,16 @@ AWS_REGION=us-east-1 helm s3 init s3://petclinic-helm-charts-<put-your-name>/sta
 * Verify that the ``index.yaml`` file was created.
 
 ```bash
-aws s3 ls s3://petclinic-helm-charts-<put-your-name>/stable/myapp/
+aws s3 ls s3://petclinic-helm-charts-perfectotr/stable/myapp/
 ```
 
 * Add the Amazon S3 repository to Helm on the client machine. 
 
 ```bash
 helm repo ls
-AWS_REGION=us-east-1 helm repo add stable-petclinicapp s3://petclinic-helm-charts-<put-your-name>/stable/myapp/
+AWS_REGION=us-east-1 helm repo add stable-petclinicapp s3://petclinic-helm-charts-perfectotr/stable/myapp/
+# if needed
+AWS_REGION=us-east-1 helm repo remove stable-petclinicapp s3://petclinic-helm-charts-perfectotr/stable/myapp/
 ```
 
 * Update `version` and `appVersion` field of `k8s/petclinic_chart/Chart.yaml` file as below for testing.
@@ -2023,6 +2025,8 @@ helm package petclinic_chart/
 ```bash
 HELM_S3_MODE=3 AWS_REGION=us-east-1 helm s3 push ./petclinic_chart-0.0.1.tgz stable-petclinicapp
 ```
+HELM_S3_MODE=3 AWS_REGION=us-east-1 helm s3 push /home/ec2-user/azure-capstone-microservice/k8s/petclinic_chart-0.0.2.tgz stable-petclinicapp
+
 
 * Search for the Helm chart.
 
@@ -2189,7 +2193,7 @@ git push --set-upstream origin feature/msp-18
 PATH="$PATH:/usr/local/bin"
 APP_REPO_NAME="clarusway-repo/petclinic-app-dev" # Write your own repo name
 AWS_REGION="us-east-1" #Update this line if you work on another region
-ECR_REGISTRY="046402772087.dkr.ecr.us-east-1.amazonaws.com" # Replace this line with your ECR name
+ECR_REGISTRY="986035950657.dkr.ecr.us-east-1.amazonaws.com" # Replace this line with your ECR name
 aws ecr create-repository \
     --repository-name ${APP_REPO_NAME} \
     --image-scanning-configuration scanOnPush=false \
@@ -2429,7 +2433,7 @@ pipeline {
                 echo 'Creating QA Automation Infrastructure for Dev Environment'
                 sh """
                     cd infrastructure/dev-k8s-terraform
-                    sed -i "s/clarus/$ANS_KEYPAIR/g" main.tf
+                    sed -i "s/null/$ANS_KEYPAIR/g" main.tf
                     terraform init
                     terraform apply -auto-approve -no-color
                 """
