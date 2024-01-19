@@ -144,11 +144,6 @@ pipeline {
  }
 
     post {
-        success {
-            script {
-                slackSend channel: '#class-chat', color: 'slackSend color: "#baff1e", message: "Build Started: ${env.JOB_NAME} ${env.BUILD_NUMBER}"', iconEmoji: ':2a6cf616e37e286ca:', message: ':jenkins-party: Your job process successfully complated. DemirMann hat geschaft. :2a6cf616e37e286ca:', teamDomain: 'itcoderscamp', tokenCredentialId: 'demirMannOnSlack', username: 'EisenMann'
-            }
-        }
         always {
             echo 'Deleting all local images'
             sh 'docker image prune -af'
