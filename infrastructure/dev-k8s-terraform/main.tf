@@ -158,8 +158,8 @@ resource "aws_instance" "kube-master" {
     iam_instance_profile = aws_iam_instance_profile.dmr-petclinic-master-server-profile.name
     vpc_security_group_ids = [aws_security_group.dmr-petclinic-kube-master-sg.id, aws_security_group.dmr-petclinic-mutual-sg.id]
     key_name = "null"
-    subnet_id = "subnet-027b102c209b9b85c"  # select own subnet_id of us-east-1a
-    availability_zone = "us-east-1a"
+    subnet_id = "subnet-0889016f28901654e"  # select own subnet_id of us-east-1c
+    availability_zone = "us-east-1c"
     tags = {
         Name = "kube-master"
         Project = "tera-kube-ans"
@@ -174,8 +174,8 @@ resource "aws_instance" "worker-1" {
     instance_type = "t3a.medium"
     vpc_security_group_ids = [aws_security_group.dmr-petclinic-kube-worker-sg.id, aws_security_group.dmr-petclinic-mutual-sg.id]
     key_name = "null"
-    subnet_id = "subnet-027b102c209b9b85c"  # select own subnet_id of us-east-1a
-    availability_zone = "us-east-1a"
+    subnet_id = "subnet-0889016f28901654e"  # select own subnet_id of us-east-1c
+    availability_zone = "us-east-1c"
     tags = {
         Name = "worker-1"
         Project = "tera-kube-ans"
@@ -190,8 +190,8 @@ resource "aws_instance" "worker-2" {
     instance_type = "t3a.medium"
     vpc_security_group_ids = [aws_security_group.dmr-petclinic-kube-worker-sg.id, aws_security_group.dmr-petclinic-mutual-sg.id]
     key_name = "null"
-    subnet_id = "subnet-027b102c209b9b85c"  # select own subnet_id of us-east-1a
-    availability_zone = "us-east-1a"
+    subnet_id = "subnet-0889016f28901654e"  # select own subnet_id of us-east-1c
+    availability_zone = "us-east-1c"
     tags = {
         Name = "worker-2"
         Project = "tera-kube-ans"
