@@ -2593,6 +2593,12 @@ eksctl version
 
 ```bash
 curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.26.4/2023-05-11/bin/linux/amd64/kubectl
+# linux version 1.27
+curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.27.9/2024-01-04/bin/linux/amd64/kubectl
+# linux latestone 1.28.5
+curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.28.5/2024-01-04/bin/linux/amd64/kubectl
+# for windows 1.28.5
+curl.exe -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.28.5/2024-01-04/bin/windows/amd64/kubectl.exe
 ```
 
 - Apply execute permissions to the binary.
@@ -2611,6 +2617,8 @@ sudo mv kubectl /usr/local/bin
 
 ```bash
 kubectl version --short --client
+# --short flag deprecated short output is default use command below
+kubectl version --client
 ```
 
 - Switch user to jenkins for creating eks cluster. Execute following commands as `jenkins` user.
@@ -2643,14 +2651,14 @@ managedNodeGroups:
 ```bash
 eksctl create cluster -f cluster.yaml
 ```
-
+eksctl create cluster -f cluster.yaml --name=petclinic-cluster --version=1.28
 - After the cluster is up, run the following command to install `ingress controller`.
 
 ```bash
 export PATH=$PATH:$HOME/bin
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.0/deploy/static/provider/cloud/deploy.yaml
 ```
-
+aws eks update-kubeconfig --region region-code --name my-cluster
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 ## MSP 20 - Prepare Build Scripts for QA Environment
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -2676,7 +2684,9 @@ git checkout feature/msp-20
 PATH="$PATH:/usr/local/bin"
 APP_REPO_NAME="clarusway-repo/petclinic-app-qa"
 AWS_REGION="us-east-1"
-
+AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+# export AWS_REGION="us-east-1"
+ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
 aws ecr describe-repositories --region ${AWS_REGION} --repository-name ${APP_REPO_NAME} || \
 aws ecr create-repository \
  --repository-name ${APP_REPO_NAME} \
@@ -2747,7 +2757,7 @@ docker push "${IMAGE_TAG_PROMETHEUS_SERVICE}"
 echo 'Deploying App on Kubernetes'
 envsubst < k8s/petclinic_chart/values-template.yaml > k8s/petclinic_chart/values.yaml
 sed -i s/HELM_VERSION/${BUILD_NUMBER}/ k8s/petclinic_chart/Chart.yaml
-AWS_REGION=$AWS_REGION helm repo add stable-petclinic s3://petclinic-helm-charts-<put-your-name>/stable/myapp/ || echo "repository name already exists"
+AWS_REGION=$AWS_REGION helm repo add stable-petclinic s3://petclinic-helm-charts-perfectotr/stable/myapp/ || echo "repository name already exists"
 AWS_REGION=$AWS_REGION helm repo update
 helm package k8s/petclinic_chart
 AWS_REGION=$AWS_REGION helm s3 push --force petclinic_chart-${BUILD_NUMBER}.tgz stable-petclinic
