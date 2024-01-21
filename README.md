@@ -2834,7 +2834,7 @@ docker image prune -af
 
 ```bash
 git add .
-git commit -m 'manually demployment added script for jenkins job to build and deploy app on QA environment dmr 4'
+git commit -m 'manually demployment added script for jenkins job to build and deploy app on QA environment 4'
 git push --set-upstream origin feature/msp-21
 git checkout dev
 git merge feature/msp-21
@@ -2872,7 +2872,7 @@ pipeline {
     environment {
         PATH=sh(script:"echo $PATH:/usr/local/bin:$HOME/bin", returnStdout:true).trim()
         APP_NAME="petclinic"
-        APP_REPO_NAME="clarusway-repo/petclinic-app-qa-dmr"
+        APP_REPO_NAME="clarusway-repo/petclinic-app-qa"
         AWS_ACCOUNT_ID=sh(script:'export PATH="$PATH:/usr/local/bin" && aws sts get-caller-identity --query Account --output text', returnStdout:true).trim()
         AWS_REGION="us-east-1"
         ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
