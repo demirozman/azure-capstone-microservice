@@ -2682,7 +2682,7 @@ git checkout feature/msp-20
 ```
 ```bash
 PATH="$PATH:/usr/local/bin"
-APP_REPO_NAME="clarusway-repo/petclinic-app-qa-dmr"
+APP_REPO_NAME="clarusway-repo/petclinic-app-qa"
 AWS_REGION="us-east-1"
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 # export AWS_REGION="us-east-1"
@@ -2942,7 +2942,7 @@ pipeline {
 
 ```bash
 git add .
-git commit -m 'added jenkinsfile petclinic-weekly-qa for release branch'
+git commit -m 'added jenkinsfile petclinic-weekly-qa for release branch 1'
 git push --set-upstream origin feature/msp-22
 git checkout dev
 git merge feature/msp-22
