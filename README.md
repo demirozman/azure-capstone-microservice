@@ -2834,7 +2834,7 @@ docker image prune -af
 
 ```bash
 git add .
-git commit -m 'manually demployment added script for jenkins job to build and deploy app on QA environment dmr 3'
+git commit -m 'manually demployment added script for jenkins job to build and deploy app on QA environment dmr 4'
 git push --set-upstream origin feature/msp-21
 git checkout dev
 git merge feature/msp-21
