@@ -2658,7 +2658,7 @@ managedNodeGroups:
 - Create an EKS cluster via `eksctl`. It will take a while.
 
 ```bash
-eksctl create cluster -f cluster.yaml
+eksctl create cluster -f /var/lib/jenkins/cluster.yaml
 ```
 eksctl create cluster -f cluster.yaml --name=petclinic-cluster --version=1.28
 - After the cluster is up, run the following command to install `ingress controller`.
@@ -2691,7 +2691,7 @@ git checkout feature/msp-20
 ```
 ```bash
 PATH="$PATH:/usr/local/bin"
-APP_REPO_NAME="clarusway-repo/petclinic-app-qa"
+APP_REPO_NAME="clarusway-repo/petclinic-app-qa-dmr"
 AWS_REGION="us-east-1"
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 # export AWS_REGION="us-east-1"
@@ -2820,7 +2820,7 @@ git checkout feature/msp-21
 ```bash
 PATH="$PATH:/usr/local/bin:$HOME/bin"
 APP_NAME="petclinic"
-APP_REPO_NAME="clarusway-repo/petclinic-app-qa-dmr"
+APP_REPO_NAME="clarusway-repo/petclinic-app-qa"
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 export AWS_REGION="us-east-1"
 ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
@@ -2843,7 +2843,7 @@ docker image prune -af
 
 ```bash
 git add .
-git commit -m 'manually demployment added script for jenkins job to build and deploy app on QA environment dmr'
+git commit -m 'manually demployment added script for jenkins job to build and deploy app on QA environment dmr 3'
 git push --set-upstream origin feature/msp-21
 git checkout dev
 git merge feature/msp-21
