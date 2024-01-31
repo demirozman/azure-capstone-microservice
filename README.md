@@ -3717,7 +3717,7 @@ pipeline {
 * Click `Build Now`
 
 * Commit the change, then push the script to the remote repo.
-git remote set-url https://demirozman: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@github.com/demirozman/azure-capstone-microservice.git
+git remote add origin https://demirozman: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@github.com/demirozman/azure-capstone-microservice.git
 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
 ``` bash
 git add .
