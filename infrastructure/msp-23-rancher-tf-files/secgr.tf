@@ -26,6 +26,7 @@ resource "aws_security_group" "rancher-alb-dmr" {
 }
 
 resource "aws_security_group" "tf-rancher-sec-gr-dmr" {
+  depends_on = [aws_security_group.rancher-alb-dmr]
   name = var.secgrname
   tags = {
     Name = var.secgrname
@@ -50,7 +51,7 @@ resource "aws_security_group" "tf-rancher-sec-gr-dmr" {
     from_port   = 443
     protocol    = "tcp"
     to_port     = 443
-    cidr_blocks = [aws_security_group.rancher-alb-dmr.id]
+    security_groups = [aws_security_group.rancher-alb-dmr.id]
   }
 
   ingress {
