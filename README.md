@@ -3157,7 +3157,7 @@ sudo apt-get update
 
 # Install and start Docker
 # RKE is not compatible with the current Docker version (v23 hence we need to install an earlier version of Docker
-sudo apt-get install docker-ce=5:20.10.24~3-0~ubuntu-jammy  docker-ce-cli=5:20.10.24~3-0~ubuntu-jammy containerd.io docker-compose-plugin
+sudo apt-get install docker-ce=5:20.10.23~3-0~ubuntu-focal  docker-ce-cli=5:20.10.23~3-0~ubuntu-focal containerd.io docker-compose-plugin
 sudo systemctl start docker
 sudo systemctl enable docker
 
