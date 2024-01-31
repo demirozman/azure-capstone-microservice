@@ -3,7 +3,7 @@ pipeline {
     environment {
         PATH=sh(script:"echo $PATH:/usr/local/bin:$HOME/bin", returnStdout:true).trim()
         APP_NAME="petclinic"
-        APP_REPO_NAME="clarusway-repo/petclinic-app-qa-dmr"
+        APP_REPO_NAME="clarusway-repo/petclinic-app-qa"
         AWS_ACCOUNT_ID=sh(script:'export PATH="$PATH:/usr/local/bin" && aws sts get-caller-identity --query Account --output text', returnStdout:true).trim()
         AWS_REGION="us-east-1"
         ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
@@ -64,6 +64,11 @@ pipeline {
         always {
             echo 'Deleting all local images'
             sh 'docker image prune -af'
+        }
+        success {
+            script {
+                slackSend channel: '#class-chat', color: 'slackSend color: "#BAFF1E", message: "Build Started: ${env.JOB_NAME} ${env.BUILD_NUMBER}"', iconEmoji: ':2a6cf616e37e286ca:', message: ':jenkins-party: Your job process successfully complated. DemirMann hat geschaft. :2a6cf616e37e286ca:', teamDomain: 'itcoderscamp', tokenCredentialId: 'demirMannOnSlack', username: 'EisenMann'
+            }
         }
     }
 }

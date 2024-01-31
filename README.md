@@ -1,9 +1,9 @@
-# Project 505 AZURE: Microservices CI/CD Pipeline
+# Project 505: Microservices CI/CD Pipeline
 
 ## Description
 
-This project aims to create full CI/CD Pipeline for microservice based applications using [Spring Petclinic Microservices Application](https://github.com/spring-petclinic/spring-petclinic-microservices). Jenkins Server deployed on Elastic Compute Cloud (EC2) Instance is used as CI/CD Server to build pipelines. 
-In this project Ubuntu 22.04 LTS is prefered. 
+This project aims to create full CI/CD Pipeline for microservice based applications using [Spring Petclinic Microservices Application](https://github.com/spring-petclinic/spring-petclinic-microservices). Jenkins Server deployed on Elastic Compute Cloud (EC2) Instance is used as CI/CD Server to build pipelines.
+
 ## DevOps Pipelines
 
 ### Development Diagram
@@ -63,29 +63,20 @@ In this project Ubuntu 22.04 LTS is prefered.
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 * Prepare development server manually on Amazon Linux 2023 (t3a.medium) for developers, enabled with `Docker`,  `Docker-Compose`,  `Java 11`,  `Git`.
-# git is already installed on azure/ubuntu 22.04 lts
+
 ``` bash
 #! /bin/bash
-sudo apt-get update -y
-sudo apt-get upgrade -y
+sudo dnf update -y
 sudo hostnamectl set-hostname petclinic-dev-server
-sudo apt-get install apt-transport-https ca-certificates curl gnupg lsb-release -y
-sudo mkdir -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg -y
-# Add the repository to Apt sources:
-sudo echo "deb [arch=$(dpkg --print-architecture) \
-     signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-     $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-     sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo dnf install docker -y
 sudo systemctl start docker
 sudo systemctl enable docker
-sudo usermod -a -G docker azureuser
+sudo usermod -a -G docker ec2-user
 sudo curl -SL https://github.com/docker/compose/releases/download/v2.20.3/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
+sudo dnf install git -y
+sudo dnf install java-11-amazon-corretto -y
 newgrp docker
-sudo apt-get install openjdk-11-jdk -y
 ```
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -2843,7 +2834,7 @@ docker image prune -af
 
 ```bash
 git add .
-git commit -m 'manually demployment added script for jenkins job to build and deploy app on QA environment dmr 4'
+git commit -m 'manually demployment added script for jenkins job to build and deploy app on QA environment 4'
 git push --set-upstream origin feature/msp-21
 git checkout dev
 git merge feature/msp-21
@@ -2881,7 +2872,7 @@ pipeline {
     environment {
         PATH=sh(script:"echo $PATH:/usr/local/bin:$HOME/bin", returnStdout:true).trim()
         APP_NAME="petclinic"
-        APP_REPO_NAME="clarusway-repo/petclinic-app-qa-dmr"
+        APP_REPO_NAME="clarusway-repo/petclinic-app-qa"
         AWS_ACCOUNT_ID=sh(script:'export PATH="$PATH:/usr/local/bin" && aws sts get-caller-identity --query Account --output text', returnStdout:true).trim()
         AWS_REGION="us-east-1"
         ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
@@ -3308,7 +3299,7 @@ kubectl create namespace cattle-system
 ```bash
 helm install rancher rancher-latest/rancher \
   --namespace cattle-system \
-  --set hostname=rancher.clarusway.us \
+  --set hostname=rancher.perfectlectures.us \
   --set tls=external \
   --set replicas=1 \
   --set global.cattle.psp.enabled=false
@@ -3726,7 +3717,7 @@ pipeline {
 * Click `Build Now`
 
 * Commit the change, then push the script to the remote repo.
-
+git remote add origin https://github.com/demirozman/azure-capstone-microservice.git
 ``` bash
 git add .
 git commit -m 'added jenkinsfile petclinic-staging for release branch'
