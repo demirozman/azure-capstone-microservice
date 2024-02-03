@@ -3736,7 +3736,7 @@ git push origin release
 ``` bash
 git checkout release
 git branch feature/msp-27
-git checkout feature/msp-27
+git checkout -b feature/msp-27
 ```
 
 - Switch user to jenkins for creating eks cluster. Execute following commands as `jenkins` user.
@@ -3754,10 +3754,16 @@ kind: ClusterConfig
 metadata:
   name: petclinic-cluster
   region: us-east-1
-availabilityZones: ["us-east-1a", "us-east-1b", "us-east-1c"]
+availabilityZones: ["us-east-1a", "us-east-1f", "us-east-1c"]
 managedNodeGroups:
-  - name: ng-1
+  - name: dmr-ng-1
     instanceType: t3a.medium
+    desiredCapacity: 1
+    minSize: 1
+    maxSize: 2
+    volumeSize: 8
+  - name: dmr-ng-2
+    instanceType: t2.micro
     desiredCapacity: 2
     minSize: 2
     maxSize: 3
