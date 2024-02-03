@@ -65,5 +65,10 @@ pipeline {
             echo 'Deleting all local images'
             sh 'docker image prune -af'
         }
+        success {
+            script {
+                slackSend channel: '#class-chat', color: 'slackSend color: "#BAFF1E", message: "Build Started: ${env.JOB_NAME} ${env.BUILD_NUMBER}"', iconEmoji: ':2a6cf616e37e286ca:', message: ':jenkins-party: EisenMann Your EKS RDS and Prod job processes successfully complated. DemirMann hat geschaft. :2a6cf616e37e286ca:', teamDomain: 'itcoderscamp', tokenCredentialId: 'demirMannOnSlack', username: 'EisenMann'
+            }
+        }
     }
 }
